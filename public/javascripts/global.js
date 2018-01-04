@@ -10,6 +10,12 @@ $(document).ready(function () {
     // Username link click
     $('#userList table tbody').on('click', 'td a.linkshowuser', showUserInfo);
 
+    // btnAddUser click
+    $('#btnAddUser').on('click', addUser);
+
+    // Username link click
+    $('#userList table tbody').on('click', 'td a.linkdeleteuser', deleteUser);
+
 });
 
 // Functions =============================================================
@@ -55,3 +61,68 @@ function showUserInfo(event) {
     $('#userInfoGender').text(thisUserObject.gender);
     $('#userInfoLocation').text(thisUserObject.location);
 };
+
+function addUser(event) {
+    event.preventDefault();
+
+    // Super basic validation - increase errorCount variable if any fields are blank
+    var errorCount = 0;
+    $('#addUser input').each(function (index, val) {
+        if ($(this).val() === '') { errorCount++; }
+    });
+
+    if (errorCount === 0) {
+
+        var user = {
+            'username': $('#addUser fieldset input#inputUserName').val(),
+            'email': $('#addUser fieldset input#inputUserEmail').val(),
+            'fullname': $('#addUser fieldset input#inputUserFullname').val(),
+            'age': $('#addUser fieldset input#inputUserAge').val(),
+            'location': $('#addUser fieldset input#inputUserLocation').val(),
+            'gender': $('#addUser fieldset input#inputUserGender').val()
+        };
+
+        $.ajax({
+            type: 'post',
+            data: user,
+            url: '/users/',
+            dataType: 'JSON'
+        }).done(function (response) {
+
+            if (response.msg === '') {
+
+                $('#addUser fieldset input').val('');
+
+                populateTable();
+            }
+            else {
+                alert('Error: ' + response.msg);
+            }
+        });
+    } else {
+        alert('Please fill all fields');
+        return false;
+    }
+};
+
+function deleteUser(event) {
+    event.preventDefault();
+
+    var confirm = confirm('Are you sure you want to delete this user?');
+
+    if (confirm === true) {
+
+        $.ajax({
+            type: 'delete',
+            url: '/users/' + $(this).attr('rel')
+        }).done(function (response) {
+            if (response.msg.length > 0) {
+                alert('Error:' + response.msg);
+            }
+            populateTable();
+        });
+    } else {
+        return false;
+    }
+};
+
