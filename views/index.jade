@@ -2,43 +2,43 @@ extends layout
 
 block content
     h1= title
-    p Welcome to out test
+    p Welcome to our test
 
-    // wrapper
+    // Wrapper
     #wrapper
-        // user info
+
+        // USER INFO
         #userInfo
             h2 User Info
             p
                 strong Name:
-                |    <span id='userInfoName'></span>
+                |  <span id='userInfoName'></span>
                 br
                 strong Age:
-                |    <span id='userInfoAge'></span>
+                |  <span id='userInfoAge'></span>
                 br
                 strong Gender:
-                |    <span id='userInfoGender'></span>
+                |  <span id='userInfoGender'></span>
                 br
                 strong Location:
-                |    <span id='userInfoLocation'></span>
-                br
-            // /user info
+                |  <span id='userInfoLocation'></span>
+        // /USER INFO
 
         // USER LIST
-        h2 user List
+        h2 User List
         #userList
-            table 
+            table
                 thead
-                th UserName
-                th Email
-                th Delete?
-            tbody
+                    th UserName
+                    th Email
+                    th Delete?
+                tbody
         // /USER LIST
 
         // ADD USER
         h2 Add User
         #addUser
-        fieldset
+            fieldset
                 input#inputUserName(type='text', placeholder='Username')
                 input#inputUserEmail(type='text', placeholder='Email')
                 br
@@ -51,4 +51,4 @@ block content
                 button#btnAddUser Add User
         // /ADD USER
 
-    // /wrapper
+    // /WRAPPER
